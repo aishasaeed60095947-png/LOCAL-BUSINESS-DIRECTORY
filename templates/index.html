@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Business & Startup Directory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container header-content">
+            <div class="logo">
+                <h1>Campus<span>Biz</span></h1>
+            </div>
+            <nav class="user-nav">
+                <a href="{{ url_for('index') }}" class="nav-btn active">Directory</a>
+                <a href="{{ url_for('add_business') }}" class="nav-btn submit-btn">Register Startup</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-layout">
+        <!-- Sidebar: Recently Added Stack -->
+        <aside class="recent-sidebar">
+            <div class="glass-card">
+                <h2>🕒 Recently Registered</h2>
+                <p class="subtitle">Latest startups added to our ecosystem</p>
+                
+                {% if recent %}
+                <ul class="recent-stack">
+                    {% for biz in recent %}
+                    <li class="stack-item">
+                        <div class="stack-badge">{{ loop.index }}</div>
+                        <div class="stack-details">
+                            <h4 class="biz-title">{{ biz.name }}</h4>
+                            <span class="biz-category">{{ biz.category }}</span>
+                            <time class="biz-time">{{ biz.get_formatted_time() }}</time>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="empty-state-small">
+                    <p>No startups registered yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </aside>
+
+        <!-- Main Content: Full Directory -->
+        <section class="directory-content">
+            <div class="section-header">
+                <h2>All Businesses & Startups</h2>
+                <span class="count-badge">{{ businesses|length }} Total</span>
+            </div>
+
+            {% if businesses %}
+            <div class="business-grid">
+                {% for biz in businesses %}
+                <article class="business-card">
+                    <div class="card-header">
+                        <div class="category-tag">{{ biz.category }}</div>
+                        <time class="date-tag">{{ biz.created_at.strftime("%b %d, %Y") }}</time>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="biz-name">{{ biz.name }}</h3>
+                        <p class="biz-desc">{{ biz.description or "No description provided." }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="oop-summary">
+                            <strong>OOP Summary:</strong> {{ biz.get_summary() }}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="glass-card empty-state">
+                <div class="empty-icon">🏢</div>
+                <h3>The directory is empty</h3>
+                <p>Be the first to showcase your business or startup in our university community.</p>
+                <a href="{{ url_for('add_business') }}" class="btn-primary mt-4">Register Now</a>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+    
+    <footer class="app-footer">
+        <p>&copy; 2024 CampusBiz Directory</p>
+    </footer>
+</body>
+</html>
