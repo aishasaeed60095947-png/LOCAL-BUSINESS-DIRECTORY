@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Business - CampusBiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container header-content">
+            <div class="logo">
+                <h1>Campus<span>Biz</span></h1>
+            </div>
+            <nav class="user-nav">
+                <a href="{{ url_for('index') }}" class="nav-btn">Directory</a>
+                <a href="{{ url_for('add_business') }}" class="nav-btn submit-btn active">Register Startup</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container form-container">
+        <div class="glass-card form-wrapper">
+            <div class="form-header">
+                <h2>🚀 Add Your Startup</h2>
+                <p>Join the university's fastest-growing business directory.</p>
+            </div>
+            
+            <form action="{{ url_for('add_business') }}" method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Business / Startup Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="e.g. Quantum Coffee" autocomplete="off">
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>Select an industry...</option>
+                        <option value="Technology">Technology & Software</option>
+                        <option value="Food & Beverage">Food & Beverage</option>
+                        <option value="Retail">Retail & E-commerce</option>
+                        <option value="Services">Professional Services</option>
+                        <option value="Healthcare">Healthcare & Wellness</option>
+                        <option value="Education">EdTech & Tutoring</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Short Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="What problem does your business solve?"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary w-full">Register Business</button>
+                    <a href="{{ url_for('index') }}" class="btn-secondary w-full text-center">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <footer class="app-footer">
+        <p>&copy; 2024 CampusBiz Directory</p>
+    </footer>
+</body>
+</html>
